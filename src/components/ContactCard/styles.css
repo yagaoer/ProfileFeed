@@ -1,0 +1,114 @@
+.contact-card {
+  display: flex;
+  padding: 16px;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 16px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.contact-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.contact-card.in-view {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.avatar-container {
+  margin-right: 16px;
+}
+
+.avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #f0f0f0;
+}
+
+.contact-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-name {
+  margin: 0 0 4px 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+}
+
+.contact-title,
+.contact-industry,
+.contact-education,
+.contact-experience {
+  margin: 0 0 4px 0;
+  font-size: 14px;
+  color: #666;
+}
+
+.contact-tags {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 8px 0;
+}
+
+.tag {
+  background-color: #f0f7ff;
+  color: #1890ff;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  margin-right: 8px;
+  margin-bottom: 4px;
+}
+
+.contact-stats {
+  display: flex;
+  justify-content: space-between;
+  margin: 8px 0;
+  font-size: 12px;
+  color: #999;
+}
+
+.connect-button {
+  align-self: flex-start;
+  margin-top: 8px;
+  padding: 6px 16px;
+  border: none;
+  border-radius: 4px;
+  background-color: #1890ff;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.connect-button:hover {
+  background-color: #40a9ff;
+}
+
+.connect-button:disabled {
+  background-color: #d9d9d9;
+  cursor: not-allowed;
+}
+
+.connect-button.connected {
+  background-color: #52c41a;
+} 
