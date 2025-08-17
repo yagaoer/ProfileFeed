@@ -1,0 +1,158 @@
+.performance-monitor {
+  position: fixed;
+  z-index: 9999;
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+}
+
+.performance-monitor.top-left {
+  top: 20px;
+  left: 20px;
+}
+
+.performance-monitor.top-right {
+  top: 20px;
+  right: 20px;
+}
+
+.performance-monitor.bottom-left {
+  bottom: 20px;
+  left: 20px;
+}
+
+.performance-monitor.bottom-right {
+  bottom: 20px;
+  right: 20px;
+}
+
+.performance-toggle {
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.2s;
+}
+
+.performance-toggle:hover {
+  background: rgba(0, 0, 0, 0.9);
+}
+
+.performance-panel {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  width: 280px;
+  background: rgba(0, 0, 0, 0.9);
+  color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+.performance-monitor.bottom-right .performance-panel,
+.performance-monitor.bottom-left .performance-panel {
+  top: auto;
+  bottom: 40px;
+}
+
+.performance-monitor.top-left .performance-panel,
+.performance-monitor.bottom-left .performance-panel {
+  right: auto;
+  left: 0;
+}
+
+.performance-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.performance-header h4 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.performance-header button {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 0;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.performance-metrics {
+  padding: 16px;
+}
+
+.metric {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.metric:last-child {
+  margin-bottom: 0;
+}
+
+.metric-label {
+  color: #ccc;
+}
+
+.metric-value {
+  font-weight: bold;
+  color: white;
+}
+
+.metric-value.good {
+  color: #52c41a;
+}
+
+.metric-value.caution {
+  color: #faad14;
+}
+
+.metric-value.warning {
+  color: #ff4d4f;
+}
+
+.performance-tips {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 12px 16px;
+}
+
+.tip {
+  padding: 8px;
+  border-radius: 4px;
+  margin-bottom: 8px;
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.tip:last-child {
+  margin-bottom: 0;
+}
+
+.tip.warning {
+  background: rgba(255, 77, 79, 0.2);
+  border-left: 3px solid #ff4d4f;
+}
+
+.tip.caution {
+  background: rgba(250, 173, 20, 0.2);
+  border-left: 3px solid #faad14;
+}
