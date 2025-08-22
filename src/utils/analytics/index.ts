@@ -21,6 +21,7 @@ class Analytics {
   // 开启调试模式
   public enableDebugMode(): void {
     this.debugMode = true;
+    // eslint-disable-next-line no-console
     console.log('[埋点] 调试模式已启用');
   }
 
@@ -29,6 +30,7 @@ class Analytics {
     this.events.push(event);
     
     if (this.debugMode) {
+      // eslint-disable-next-line no-console
       console.log(`[埋点] ${event.type}:`, event.data);
     }
 
@@ -114,6 +116,7 @@ class Analytics {
     // 这里我们只是模拟发送
     setTimeout(() => {
       if (this.debugMode) {
+        // eslint-disable-next-line no-console
         console.log(`[埋点] 事件已发送到服务器: ${event.type}`);
       }
     }, 100);
