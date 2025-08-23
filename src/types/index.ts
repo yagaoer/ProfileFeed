@@ -1,4 +1,4 @@
-// 人脉卡片的类型定义
+// 联系人卡片的类型定义
 export interface ContactCardProps {
   id: string;
   name: string;
@@ -7,7 +7,7 @@ export interface ContactCardProps {
   company: string;
   industry: string;
   mutual: number; // 共同好友数量
-  distance?: string; // 社交距离，如"一度人脉"
+  distance?: string; // 社交距离，如"一度联系人"
   tags?: string[]; // 标签，如"技术大牛"、"HR"等
   isConnected: boolean; // 是否已建立连接
   education?: {
@@ -24,7 +24,7 @@ export interface ContactCardProps {
   isInView?: boolean; // 是否在视图中，用于曝光埋点和懒加载
 }
 
-// 人脉卡片视图状态
+// 联系人卡片视图状态
 export interface ContactListState {
   contacts: ContactCardProps[];
   isLoading: boolean;
@@ -60,6 +60,6 @@ export interface TrackEvent {
     timestamp: number;
     abTestVariant?: ABTestVariant;
     elementId?: string;
-    [key: string]: any; // 其他可能的参数
+    [key: string]: string | number | boolean | undefined; // 其他可能的参数
   };
 } 
