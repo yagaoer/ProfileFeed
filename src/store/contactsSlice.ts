@@ -29,15 +29,15 @@ export const fetchContacts = createAsyncThunk(
       const response = await axios.get(`https://randomuser.me/api/?page=${page}&results=10&seed=maimai`);
       
       // 将API返回的数据转换为我们的类型
-      const contacts: ContactCardProps[] = response.data.results.map((user: any, index: number) => ({
+      const contacts: ContactCardProps[] = response.data.results.map((user: { login: { uuid: string }; name: { first: string; last: string }; picture: { large: string } }, index: number) => ({
         id: user.login.uuid,
         name: `${user.name.first} ${user.name.last}`,
         avatar: user.picture.large,
         title: ['产品经理', '前端开发', '后端开发', 'UI设计师', '数据分析师'][index % 5],
-        company: ['脉脉', '阿里巴巴', '腾讯', '百度', '字节跳动'][Math.floor(Math.random() * 5)],
+        company: ['TechCorp', '阿里巴巴', '腾讯', '百度', '字节跳动'][Math.floor(Math.random() * 5)],
         industry: ['互联网', '金融', '教育', '医疗', 'AI'][Math.floor(Math.random() * 5)],
         mutual: Math.floor(Math.random() * 20),
-        distance: ['一度人脉', '二度人脉', '二度人脉'][Math.floor(Math.random() * 3)],
+        distance: ['一度联系人', '二度联系人', '二度联系人'][Math.floor(Math.random() * 3)],
         tags: [
           '技术大牛', 'HR', '资深产品', '创业者', '投资人', 
           'React专家', 'TypeScript专家'
@@ -50,7 +50,7 @@ export const fetchContacts = createAsyncThunk(
           year: `${2010 + Math.floor(Math.random() * 10)}`,
         }],
         experience: [{
-          company: ['脉脉', '阿里巴巴', '腾讯', '百度', '字节跳动'][Math.floor(Math.random() * 5)],
+          company: ['TechCorp', '阿里巴巴', '腾讯', '百度', '字节跳动'][Math.floor(Math.random() * 5)],
           title: ['前端工程师', '后端工程师', '全栈工程师', '产品经理', 'UI设计师'][Math.floor(Math.random() * 5)],
           duration: `${2015 + Math.floor(Math.random() * 5)} - 至今`,
         }],
