@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, RefObject, MutableRefObject } from 'react';
+import { useEffect, useRef, useState, MutableRefObject } from 'react';
 
 // 自定义Hook: 检测元素是否在可视区域内
 export const useInView = (
@@ -93,8 +93,10 @@ export const useScrollPosition = (
   }, [position, savePosition]);
 };
 
-export default {
+const hooks = {
   useInView,
   useInfiniteScroll,
   useScrollPosition,
-}; 
+};
+
+export default hooks; 
