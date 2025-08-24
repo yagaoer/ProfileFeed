@@ -53,7 +53,7 @@ const ContactList: React.FC = () => {
 
   return (
     <div className="contact-list-container">
-      <h1 className="list-title">人脉推荐</h1>
+      <h1 className="list-title">联系人推荐</h1>
       
       {error && <div className="error-message">加载失败: {error}</div>}
       
@@ -88,7 +88,7 @@ const ContactList: React.FC = () => {
       
       {!hasMore && contacts.length > 0 && (
         <div className="end-message">
-          已经到底啦，没有更多人脉了~
+          已经到底啦，没有更多联系人了~
         </div>
       )}
     </div>

@@ -1,16 +1,17 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { ContactCardProps } from '../../types';
+import { ContactCardProps, ABTestVariant } from '../../types';
 import { useInView } from '../../hooks/useIntersectionObserver';
 import { useAnalytics } from '../../utils/analytics';
 import { setContactInView, connectContact } from '../../store/contactsSlice';
+import LazyImage from '../LazyImage';
 import './styles.css';
 
 // 联系人卡片组件
 const ContactCard: React.FC<{
   contact: ContactCardProps;
   pageNumber: number;
-  abTestVariant: string;
+  abTestVariant: ABTestVariant;
   style?: React.CSSProperties;
 }> = ({ contact, pageNumber, abTestVariant, style = {} }) => {
   const dispatch = useDispatch();
@@ -23,7 +24,7 @@ const ContactCard: React.FC<{
       // 更新Redux状态
       dispatch(setContactInView({ id: contact.id, inView: true }));
       // 触发埋点
-      analytics.trackView(contact.id, pageNumber, abTestVariant as any);
+      analytics.trackView(contact.id, pageNumber, abTestVariant);
     }
   }, [inView, contact.id, contact.isInView, dispatch, pageNumber, abTestVariant, analytics]);
 
@@ -38,6 +39,7 @@ const ContactCard: React.FC<{
   const handleCardClick = () => {
     analytics.trackClick('contact_card', contact.id, pageNumber);
     // 在实际应用中这里可能会跳转到详情页
+    // eslint-disable-next-line no-console
     console.log('查看详情:', contact.name);
   };
 
@@ -53,11 +55,16 @@ const ContactCard: React.FC<{
       data-testid={`contact-card-${contact.id}`}
     >
       <div className="avatar-container">
-        <img 
-          src={contact.avatar} 
-          alt={`${contact.name}的头像`} 
+        <LazyImage
+          src={contact.avatar}
+          alt={`${contact.name}的头像`}
           className="avatar"
-          loading="lazy" // 使用原生懒加载
+          preload={inView} // 当卡片进入视口时预加载
+          fadeIn={true}
+          onLoad={() => {
+            // 图片加载完成时的回调
+            analytics.trackClick('avatar_loaded', contact.id, pageNumber);
+          }}
         />
       </div>
       <div className="contact-info">
@@ -89,7 +96,7 @@ const ContactCard: React.FC<{
           <span className="mutual-connection">
             {contact.mutual} 个共同好友
           </span>
-          <span className="distance">{contact.distance || '二度人脉'}</span>
+          <span className="distance">{contact.distance || '二度联系人'}</span>
         </div>
         
         <button 
@@ -97,7 +104,7 @@ const ContactCard: React.FC<{
           onClick={handleConnect}
           disabled={contact.isConnected}
         >
-          {contact.isConnected ? '已连接' : '加为人脉'}
+          {contact.isConnected ? '已连接' : '添加联系人'}
         </button>
       </div>
     </div>
