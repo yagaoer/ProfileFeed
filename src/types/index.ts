@@ -21,7 +21,6 @@ export interface ContactCardProps {
     title: string;
     duration?: string;
   }[];
-  isInView?: boolean; // 是否在视图中，用于曝光埋点和懒加载
 }
 
 // 联系人卡片视图状态
@@ -32,34 +31,4 @@ export interface ContactListState {
   page: number;
   hasMore: boolean;
   scrollPosition: number; // 保存滚动位置
-  abTest: ABTestVariant; // AB测试标识
-}
-
-// AB测试变体
-export enum ABTestVariant {
-  Control = 'control',
-  VariantA = 'variant_a',
-  VariantB = 'variant_b',
-}
-
-// 埋点事件类型
-export enum TrackEventType {
-  VIEW = 'view',
-  CLICK = 'click',
-  CONNECT = 'connect',
-  SCROLL = 'scroll',
-  AB_TEST_IMPRESSION = 'ab_test_impression',
-}
-
-// 埋点事件数据
-export interface TrackEvent {
-  type: TrackEventType;
-  data: {
-    contactId?: string;
-    page?: number;
-    timestamp: number;
-    abTestVariant?: ABTestVariant;
-    elementId?: string;
-    [key: string]: string | number | boolean | undefined; // 其他可能的参数
-  };
 } 

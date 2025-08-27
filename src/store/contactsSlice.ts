@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { ContactCardProps, ContactListState, ABTestVariant } from '../types';
+import { ContactCardProps, ContactListState } from '../types';
 
 // 初始状态
 const initialState: ContactListState = {
@@ -10,14 +10,6 @@ const initialState: ContactListState = {
   page: 1,
   hasMore: true,
   scrollPosition: 0,
-  abTest: ABTestVariant.Control, // 默认为对照组
-};
-
-// 获取随机的AB测试变体
-export const getRandomABTestVariant = (): ABTestVariant => {
-  const variants = Object.values(ABTestVariant);
-  const randomIndex = Math.floor(Math.random() * variants.length);
-  return variants[randomIndex];
 };
 
 // 异步获取联系人数据
@@ -26,7 +18,7 @@ export const fetchContacts = createAsyncThunk(
   async (page: number, { rejectWithValue }) => {
     try {
       // 这里使用模拟API，实际项目中应该连接到真实的API
-      const response = await axios.get(`https://randomuser.me/api/?page=${page}&results=10&seed=maimai`);
+      const response = await axios.get(`https://randomuser.me/api/?page=${page}&results=10&seed=profilefeed`);
       
       // 将API返回的数据转换为我们的类型
       const contacts: ContactCardProps[] = response.data.results.map((user: { login: { uuid: string }; name: { first: string; last: string }; picture: { large: string } }, index: number) => ({
@@ -54,7 +46,6 @@ export const fetchContacts = createAsyncThunk(
           title: ['前端工程师', '后端工程师', '全栈工程师', '产品经理', 'UI设计师'][Math.floor(Math.random() * 5)],
           duration: `${2015 + Math.floor(Math.random() * 5)} - 至今`,
         }],
-        isInView: false,
       }));
       
       return contacts;
@@ -73,15 +64,6 @@ const contactsSlice = createSlice({
   reducers: {
     setScrollPosition: (state, action: PayloadAction<number>) => {
       state.scrollPosition = action.payload;
-    },
-    setContactInView: (state, action: PayloadAction<{ id: string, inView: boolean }>) => {
-      const contact = state.contacts.find(contact => contact.id === action.payload.id);
-      if (contact) {
-        contact.isInView = action.payload.inView;
-      }
-    },
-    setABTestVariant: (state, action: PayloadAction<ABTestVariant>) => {
-      state.abTest = action.payload;
     },
     connectContact: (state, action: PayloadAction<string>) => {
       const contact = state.contacts.find(contact => contact.id === action.payload);
@@ -118,5 +100,5 @@ const contactsSlice = createSlice({
   },
 });
 
-export const { setScrollPosition, setContactInView, setABTestVariant, connectContact, resetContactsList } = contactsSlice.actions;
-export default contactsSlice.reducer; 
+export const { setScrollPosition, connectContact, resetContactsList } = contactsSlice.actions;
+export default contactsSlice.reducer;
