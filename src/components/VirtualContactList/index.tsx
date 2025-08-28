@@ -3,8 +3,7 @@ import { FixedSizeList as List, ListChildComponentProps } from 'react-window';
 import InfiniteLoader from 'react-window-infinite-loader';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store';
-import { fetchContacts, setABTestVariant, getRandomABTestVariant } from '../../store/contactsSlice';
-import { useAnalytics } from '../../utils/analytics';
+import { fetchContacts } from '../../store/contactsSlice';
 import ContactCard from '../ContactCard';
 import { AppDispatch } from '../../store';
 import './styles.css';
@@ -23,18 +22,9 @@ const VirtualContactList: React.FC<VirtualContactListProps> = ({
   height = CONTAINER_HEIGHT
 }) => {
   const dispatch = useDispatch<AppDispatch>();
-  const analytics = useAnalytics();
-  const { contacts, isLoading, error, page, hasMore, abTest } = useSelector(
+  const { contacts, isLoading, error, page, hasMore } = useSelector(
     (state: RootState) => state.contacts
   );
-
-  // 初始化AB测试变体
-  useEffect(() => {
-    const variant = getRandomABTestVariant();
-    dispatch(setABTestVariant(variant));
-    analytics.trackABTestImpression(variant);
-    analytics.enableDebugMode();
-  }, [dispatch, analytics]);
 
   // 加载更多数据
   const loadMoreItems = useCallback(async () => {
@@ -79,19 +69,14 @@ const VirtualContactList: React.FC<VirtualContactListProps> = ({
       <div style={style} className="virtual-list-item">
         <ContactCard
           contact={contact}
-          pageNumber={Math.floor(index / 10) + 1}
-          abTestVariant={abTest}
           style={{
-            // 根据AB测试变体应用不同样式
-            ...(abTest === 'variant_a' ? { borderLeft: '3px solid #1890ff' } : {}),
-            ...(abTest === 'variant_b' ? { backgroundColor: '#fafafa' } : {}),
             margin: '8px 16px',
             height: 'calc(100% - 16px)'
           }}
         />
       </div>
     );
-  }, [contacts, abTest]);
+  }, [contacts]);
 
   // 初始加载数据
   useEffect(() => {
